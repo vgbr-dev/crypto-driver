@@ -16,6 +16,13 @@ const crypto = require('crypto');
  */
 
 /**
+ * Options object for the Scrypt function used to generate the key.
+ *
+ * @private
+ * @typedef {crypto.ScryptOptions} ScryptOptions
+ */
+
+/**
  * Defines the structure of an object that holds error messages thrown by the
  * `CryptoDriver` class.
  *
