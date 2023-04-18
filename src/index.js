@@ -267,4 +267,4 @@ class CryptoDriver {
 }
 
 // ━━	EXPORT MODULES	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-export default CryptoDriver;
+module.exports = CryptoDriver;
