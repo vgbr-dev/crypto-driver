@@ -4,16 +4,16 @@ The `CryptoDriver` is a simple and easy-to-use encryption class, manages cipher 
 
 ## Table of Contents
 
-- [Installation](##Installation)
-- [Importing](##Importing)
-- [Usage](##Usage)
-- [API](##API)
-  - [CryptoDriver(key)](###CryptoDriver(key))
-  - [CryptoDriver#encrypt(data)](###CryptoDriver#encrypt(data))
-  - [CryptoDriver#decrypt(encrypted)](###CryptoDriver#decrypt(encrypted))
-- [Security Considerations](##Security-Considerations)
-- [Contributing](##Contributing)
-- [License](##License)
+- [Installation](#installation)
+- [Importing](#importing)
+- [Usage](#usage)
+- [API](#api)
+  - [CryptoDriver(key)](#cryptodriverkey)
+  - [CryptoDriver#encrypt(data)](#cryptodriverencryptdata)
+  - [CryptoDriver#decrypt(encrypted)](#cryptodriverdecryptencrypted)
+- [Security Considerations](#security-considerations)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Installation
 
