@@ -44,7 +44,8 @@
     "test": "cross-env NODE_ENV=test node --test test/",
     "develop": "node --watch develop.js",
     "lint": "npx eslint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepublish": "npm test"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.1",
