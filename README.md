@@ -1,6 +1,6 @@
 # CryptoDriver
 
-The `CryptoDriver` is a simple and easy-to-use encryption class, manages cipher and decipher of data using the Advanced Encryption Standard (AES) `AES-256-GCM` algorithm with a user-provided key. This algorithm uses a 256-bit key and is considered one of the most secure symmetric encryption algorithms available.
+The `CryptoDriver` is a simple and easy-to-use encryption class, manages cipher and decipher of data using the Advanced Encryption Standard (AES) `AES-256-GCM` algorithm with a user-provided password. This algorithm uses a 256-bit key and is considered one of the most secure symmetric encryption algorithms available.
 
 ## Table of Contents
 
@@ -8,7 +8,7 @@ The `CryptoDriver` is a simple and easy-to-use encryption class, manages cipher 
 - [Importing](#importing)
 - [Usage](#usage)
 - [API](#api)
-  - [CryptoDriver(key)](#cryptodriverkey)
+  - [CryptoDriver(key)](#cryptodriverpassword)
   - [CryptoDriver#encrypt(data)](#cryptodriverencryptdata)
   - [CryptoDriver#decrypt(encrypted)](#cryptodriverdecryptencrypted)
 - [Security Considerations](#security-considerations)
@@ -37,13 +37,13 @@ const CryptoDriver = require('crypto-driver');
 
 ## Usage
 
-The `CryptoDriver` module is a class that needs to be instantiated with a key before it can be used. Once instantiated, you can use the `encrypt()` and `decrypt()` methods to encrypt and decrypt data.
+The `CryptoDriver` module is a class that needs to be instantiated with a `password` before it can be used. Once instantiated, you can use the `encrypt()` and `decrypt()` methods to encrypt and decrypt data.
 
 ```js
 const CryptoDriver = require('crypto-driver');
 
-const key = 'd6F3Efeqd6F3Efeqd6F3Efeqd6F3Efeq';
-const crypto = new CryptoDriver(key);
+const password = 'this is secret';
+const crypto = new CryptoDriver(password);
 
 const data = 'This is my secret message';
 
@@ -61,23 +61,22 @@ console.log(decrypted ); // This is my secret message
 
 ## API
 
-### `CryptoDriver(key)`
+### `CryptoDriver(password)`
 
 Creates an instance of the CryptoDriver class.
 
 Arguments
 
-| Name  | Type     | Description                                                                        |
-|-------|----------|------------------------------------------------------------------------------------|
-| `key` | `string` | The `key` used for encryption and decryption. Must be a `string` of 32 characters. |
+| Name       | Type     | Description                                                                             |
+|------------|----------|-----------------------------------------------------------------------------------------|
+| `password` | `string` | The `password` used for encryption and decryption. Must be a `string` of 32 characters. |
 
 Throws
 
-| Type             | Description                                            |
-|------------------|--------------------------------------------------------|
-| `ReferenceError` | If the `key` value is `undefined`.                     |
-| `TypeError`      | If the `key` value is not a `string`.                  |
-| `RangeError`     | If the length of the `key` value is not 32 characters. |
+| Type             | Description                                |
+|------------------|--------------------------------------------|
+| `ReferenceError` | If the `password` value is `undefined`.    |
+| `TypeError`      | If the `password` value is not a `string`. |
 
 Example
 
