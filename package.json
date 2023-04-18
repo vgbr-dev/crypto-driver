@@ -1,6 +1,6 @@
 {
   "name": "crypto-driver",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": false,
   "description": "CriptoDriver class related to cipher and decipher of data.",
   "keywords": [
