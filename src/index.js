@@ -103,7 +103,7 @@ const ERRORS = {
  */
 class CryptoDriver {
   /**
-   * Creates an instance of CryptoDriver, the `contructor` method require
+   * Creates an instance of `CryptoDriver`, the `contructor` method require
    * the param `key` must be a string of 32 characters.
    *
    * @param {string} key - The key used for encryption and decryption.
@@ -121,7 +121,7 @@ class CryptoDriver {
     if (typeof key !== 'string') throw new TypeError(ERRORS.TYPE_KEY);
     if (key.length !== 32) throw new RangeError(ERRORS.LENGTH_KEY);
     /**
-     * Key used for encryption and decryption methods, must be of type string
+     * The Key used for encryption and decryption methods, must be of type string
      * with 32 characters.
      *
      * @name key
