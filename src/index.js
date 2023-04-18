@@ -35,7 +35,7 @@ const crypto = require('crypto');
  * @property {string} TYPE_ENCRYPTED      - Error message thrown when the `encrypted` value is not a string.
  */
 
-// ━━	CONSTANTS	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━	CONSTANTS	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
  * Algorithm used for encryption and decryption.
  *
