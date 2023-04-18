@@ -171,9 +171,8 @@ dist
 /develop[-_.][0-9][0-9].js
 
 # Matches the files name:
-# <root>/develop-01.js
-# <root>/develop_01.js
-# <root>/develop.01.js
+# <root>/dev.script.some.js
+# <root>/dev.script.somename.js
 /dev.script.*.js
 
 # ━━  PROJECT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
