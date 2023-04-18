@@ -17,7 +17,7 @@ The `CryptoDriver` is a simple and easy-to-use encryption class, manages cipher 
 
 ## Installation
 
-You can install CryptoDriver via npm:
+You can install CryptoDriver via [npm](https://www.npmjs.com/package/crypto-driver):
 
 ```sh
 npm install crypto-driver
