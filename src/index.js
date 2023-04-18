@@ -65,34 +65,103 @@ const TAG_BYTE_LENGTH = 16;
 const IV_BYTE_LENGTH = 12;
 
 /**
+ * Length in bytes of the key used for encryption and decryption.
+ *
+ * @private
+ * @constant KEY_BYTE_LENGTH
+ * @type {number}
+ */
+const KEY_BYTE_LENGTH = 32;
+
+/**
+ * Length in bytes of the salt used for encryption and decryption.
+ *
+ * @private
+ * @constant SALT_BYTE_LENGTH
+ * @type {number}
+ */
+const SALT_BYTE_LENGTH = 16;
+
+/**
  * Options object for the GCM auth tag length.
  *
  * @private
  * @constant IV_OPTIONS
- * @type {CipherGCMOptions}
+ * @type {CipherGCMOptions} IV_OPTIONS
  */
 const IV_OPTIONS = {
   authTagLength: TAG_BYTE_LENGTH,
 };
 
 /**
- * Holds error messages thrown by the CryptoDriver class.
+ * Options object for the Scrypt function used to generate the key.
+ *
+ * @private
+ * @constant CREATE_KEY_OPTIONS
+ * @type {ScryptOptions}
+ */
+const CREATE_KEY_OPTIONS = {
+  cost: 16384,
+  blockSize: 8,
+  parallelization: 1,
+};
+
+/**
+ * Add description.
  *
  * @private
  * @constant ERRORS
  * @type {CryptoDriverErrors}
  */
 const ERRORS = {
-  LENGTH_KEY: 'The "Key" value must be 32 characters (256 bits).',
-  UNDEFINED_KEY: 'The "key" value must be provided and must be a string.',
-  TYPE_KEY: 'The "key" value must be of type string',
+  UNDEFINED_PASSWORD: 'The "password" value must be provided and must be a string.',
+  TYPE_PASSWORD: 'The "password" value must be of type string',
   UNDEFINED_DATA: 'The "data" value must be provided and must be a string.',
   TYPE_DATA: 'The "data" value must be of type string',
   UNDEFINED_ENCRYPTED: 'The "encrypted" value must be provided and must be a string.',
   TYPE_ENCRYPTED: 'The "encrypted" value must be of type string',
 };
 
-// ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━	FUNCTIONS	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/**
+ * Generates a cryptographically strong pseudo-random data for Initialization
+ * Vector (IV). Returns a `Buffer` based on `12 bytes` size.
+ *
+ * @private
+ * @function createIV
+ * @returns {Buffer} A Buffer containing the generated random bytes for the IV.
+ * @example createIV(); // <Buffer 4b d4 62 fd b1 6c d8 d5 52 66 d5 d1>
+ *
+ */
+const createIV = () => crypto.randomBytes(IV_BYTE_LENGTH);
+
+/**
+ * Generates a cryptographically strong pseudo-random data for salt. Returns a
+ * `Buffer` based on `16 bytes` size.
+ *
+ * @private
+ * @function createSalt
+ * @returns {Buffer}  A Buffer containing the generated random bytes for the salt.
+ * @example createSalt(); // <Buffer 44 7c c3 f8 a5 12 ad 79 f3 98 1e 1b 06 cc be 31>
+ *
+ */
+const createSalt = () => crypto.randomBytes(SALT_BYTE_LENGTH);
+
+/**
+ * Generates a derived key from a given password and salt using a password-based
+ * key derivation function (PBKDF). Returns a `Buffer` based on `32 bytes` size.
+ *
+ * @private
+ * @function createKey
+ * @param {string} password - The password to use for key derivation.
+ * @param {string} salt - The salt value to use for key derivation.
+ * @returns {Buffer}  A Buffer containing the derived key.
+ * @example createKey('This is secret', salt); // <Buffer 95 9a 89 50 c6 ff 9d 74 5e 42 72 7d e1 1c 1c 50 14 e6 fe 57 b0 63 fc 28 2d a5 9f b5 ec 41 72 b4>
+ *
+ */
+const createKey = (password, salt) => crypto.scryptSync(password, salt, KEY_BYTE_LENGTH, CREATE_KEY_OPTIONS); // eslint-disable-line prettier/prettier
+
+// ━━	MODULE	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
  * The CryptoDriver class contain methods to encrypt and decrypt data.
  *
@@ -120,10 +189,9 @@ class CryptoDriver {
    * const crypto = new CryptoDriver('This is a secret');
    *```
    */
-  constructor(key) {
-    if (key === undefined) throw new ReferenceError(ERRORS.UNDEFINED_KEY);
-    if (typeof key !== 'string') throw new TypeError(ERRORS.TYPE_KEY);
-    if (key.length !== 32) throw new RangeError(ERRORS.LENGTH_KEY);
+  constructor(password) {
+    if (password === undefined) throw new ReferenceError(ERRORS.UNDEFINED_PASSWORD);
+    if (typeof password !== 'string') throw new TypeError(ERRORS.TYPE_PASSWORD);
     /**
      * The `password` used for encryption and decryption methods, must be of type string
      * with 32 characters.
@@ -133,8 +201,8 @@ class CryptoDriver {
      * @type {string}
      * @readonly
      */
-    Object.defineProperty(this, 'key', {
-      value: key,
+    Object.defineProperty(this, 'password', {
+      value: password,
       writable: false,
       enumerable: false,
       configurable: false,
@@ -158,12 +226,12 @@ class CryptoDriver {
    *```
    */
   encrypt(data) {
-    if (data === undefined) throw new ReferenceError(ERRORS.UNDEFINED_DATA);
-    if (typeof data !== 'string') throw new TypeError(ERRORS.TYPE_DATA);
-    const iv = crypto.randomBytes(IV_BYTE_LENGTH);
-    const cipher = crypto.createCipheriv(ALGORITHM, this.key, iv, IV_OPTIONS);
+    const iv = createIV();
+    const salt = createSalt();
+    const key = createKey(this.password, salt);
+    const cipher = crypto.createCipheriv(ALGORITHM, key, iv, IV_OPTIONS);
     const raw = Buffer.from(data, 'utf-8');
-    const encrypted = Buffer.concat([iv, cipher.update(raw), cipher.final(), cipher.getAuthTag()]);
+    const encrypted = Buffer.concat([salt, iv, cipher.update(raw), cipher.final(), cipher.getAuthTag()]); // eslint-disable-line prettier/prettier
     return encrypted.toString('hex');
   }
 
@@ -183,18 +251,20 @@ class CryptoDriver {
    *```
    */
   decrypt(encrypted) {
-    if (encrypted === undefined) throw new ReferenceError(ERRORS.UNDEFINED_ENCRYPTED);
-    if (typeof encrypted !== 'string') throw new TypeError(ERRORS.TYPE_ENCRYPTED);
     const cipher = Buffer.from(encrypted, 'hex');
-    const iv = cipher.subarray(0, IV_BYTE_LENGTH);
-    const data = cipher.subarray(IV_BYTE_LENGTH, cipher.length - TAG_BYTE_LENGTH);
-    const authTag = cipher.subarray(data.length + IV_BYTE_LENGTH);
-    const decipher = crypto.createDecipheriv(ALGORITHM, this.key, iv, IV_OPTIONS);
+    const salt = cipher.subarray(0, SALT_BYTE_LENGTH);
+    const iv = cipher.subarray(SALT_BYTE_LENGTH, SALT_BYTE_LENGTH + IV_BYTE_LENGTH);
+    const input = cipher.subarray(IV_BYTE_LENGTH + SALT_BYTE_LENGTH, cipher.length - TAG_BYTE_LENGTH); // eslint-disable-line prettier/prettier
+    const authTag = cipher.subarray(input.length + IV_BYTE_LENGTH + SALT_BYTE_LENGTH);
+    const key = createKey(this.password, salt);
+    const decipher = crypto.createDecipheriv(ALGORITHM, key, iv, IV_OPTIONS);
     decipher.setAuthTag(authTag);
-    const decrypted = Buffer.concat([decipher.update(data), decipher.final()]);
-    return decrypted.toString('utf-8');
+    let decrypted = decipher.update(input);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+    decrypted = decrypted.toString('utf-8');
+    return decrypted;
   }
 }
 
 // ━━	EXPORT MODULES	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-module.exports = CryptoDriver;
+export default CryptoDriver;
