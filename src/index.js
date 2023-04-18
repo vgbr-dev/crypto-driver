@@ -226,6 +226,8 @@ class CryptoDriver {
    *```
    */
   encrypt(data) {
+    if (data === undefined) throw new ReferenceError(ERRORS.UNDEFINED_DATA);
+    if (typeof data !== 'string') throw new TypeError(ERRORS.TYPE_DATA);
     const iv = createIV();
     const salt = createSalt();
     const key = createKey(this.password, salt);
@@ -251,6 +253,8 @@ class CryptoDriver {
    *```
    */
   decrypt(encrypted) {
+    if (encrypted === undefined) throw new ReferenceError(ERRORS.UNDEFINED_ENCRYPTED);
+    if (typeof encrypted !== 'string') throw new TypeError(ERRORS.TYPE_ENCRYPTED);
     const cipher = Buffer.from(encrypted, 'hex');
     const salt = cipher.subarray(0, SALT_BYTE_LENGTH);
     const iv = cipher.subarray(SALT_BYTE_LENGTH, SALT_BYTE_LENGTH + IV_BYTE_LENGTH);
