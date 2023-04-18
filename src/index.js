@@ -26,11 +26,9 @@ const crypto = require('crypto');
  * Defines the structure of an object that holds error messages thrown by the
  * `CryptoDriver` class.
  *
- * @private
  * @typedef  {object} CryptoDriverErrors
- * @property {string} LENGTH_KEY          - Error message thrown when the `key` value is not 32 characters long.
- * @property {string} UNDEFINED_KEY       - Error message thrown when the `key` value is not provided.
- * @property {string} TYPE_KEY            - Error message thrown when the `key` value is not a string.
+ * @property {string} UNDEFINED_PASSWORD  - Error message thrown when the `password` value is not provided.
+ * @property {string} TYPE_PASSWORD       - Error message thrown when the `password` value is not a string.
  * @property {string} UNDEFINED_DATA      - Error message thrown when the `data` value is not provided.
  * @property {string} TYPE_DATA           - Error message thrown when the `data` value is not a string.
  * @property {string} UNDEFINED_ENCRYPTED - Error message thrown when the `encrypted` value is not provided.
