@@ -104,21 +104,20 @@ const ERRORS = {
  * @see {@link https://en.wikipedia.org/wiki/Galois/Counter_Mode Galois/Counter Mode}
  *
  * @author Victor Giovanni Beltrán Rodríguez
- * @version 1.0.0
+ * @version 2.0.0
  */
 class CryptoDriver {
   /**
-   * Creates an instance of `CryptoDriver`, the `contructor` method require
-   * the param `key` must be a string of 32 characters.
+   * Creates an instance of CryptoDriver, the `contructor` method require
+   * the param `password` must be a string.
    *
-   * @param {string} key - The key used for encryption and decryption.
+   * @param {string} password - The password used for encryption and decryption.
    * @memberof CryptoDriver
-   * @throws {ReferenceError} If `key` value is `undefined`.
-   * @throws {TypeError} If `key` type is other than string.
-   * @throws {RangeError} If `key` type length is other than 32.
+   * @throws {ReferenceError} If `password` value is `undefined`.
+   * @throws {TypeError} If `password` type is other than string.
    * @example
    * ```js
-   * const crypto = new CryptoDriver('d6F3Efeqd6F3Efeqd6F3Efeqd6F3Efeq');
+   * const crypto = new CryptoDriver('This is a secret');
    *```
    */
   constructor(key) {
@@ -126,10 +125,10 @@ class CryptoDriver {
     if (typeof key !== 'string') throw new TypeError(ERRORS.TYPE_KEY);
     if (key.length !== 32) throw new RangeError(ERRORS.LENGTH_KEY);
     /**
-     * The Key used for encryption and decryption methods, must be of type string
+     * The `password` used for encryption and decryption methods, must be of type string
      * with 32 characters.
      *
-     * @name key
+     * @name password
      * @memberof CryptoDriver#
      * @type {string}
      * @readonly
@@ -144,16 +143,16 @@ class CryptoDriver {
 
   /**
    * Methods to encrypt data, encrypts a string using the AES-256-GCM
-   * encryption algorithm with the key specified in the constructor.
+   * encryption algorithm with the `password` specified in the constructor.
    *
    * @param {string} data - Data to encrypt.
-   * @returns {string} The encrypted data.
+   * @returns {string} Encrypted data.
    * @memberof CryptoDriver
    * @throws {ReferenceError} If `data` value is `undefined`.
    * @throws {TypeError} If `data` type is other than string.
    * @example
    * ```js
-   * const crypto = new CryptoDriver('d6F3Efeqd6F3Efeqd6F3Efeqd6F3Efeq');
+   * const crypto = new CryptoDriver('This is a secret');
    * const encrypted = crypto.encrypt('Hello world');
    * // Output like a e5be8c02e8d478b0ab9...8c28e6828010a5789a446e781f36d0
    *```
