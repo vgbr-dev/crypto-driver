@@ -173,7 +173,7 @@ const createKey = (password, salt) => crypto.scryptSync(password, salt, KEY_BYTE
  * @see {@link https://en.wikipedia.org/wiki/Galois/Counter_Mode Galois/Counter Mode}
  *
  * @author Victor Giovanni Beltrán Rodríguez
- * @version 2.0.0
+ * @version 2.0.2
  */
 class CryptoDriver {
   /**

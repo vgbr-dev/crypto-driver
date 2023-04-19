@@ -11,7 +11,7 @@
  * 256-bit key, which is considered one of the most secure symmetric encryption
  * algorithms available.
  *
- * @version 1.0.0
+ * @version 2.0.2
  * @author Victor Giovanni Beltrán Rodríguez
  * @module CryptoDriver
  */
