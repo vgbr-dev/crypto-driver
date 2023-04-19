@@ -8,7 +8,7 @@ The `CryptoDriver` is a simple and easy-to-use encryption class, manages cipher 
 - [Importing](#importing)
 - [Usage](#usage)
 - [API](#api)
-  - [CryptoDriver(key)](#cryptodriverpassword)
+  - [CryptoDriver(password)](#cryptodriverpassword)
   - [CryptoDriver#encrypt(data)](#cryptodriverencryptdata)
   - [CryptoDriver#decrypt(encrypted)](#cryptodriverdecryptencrypted)
 - [Security Considerations](#security-considerations)
@@ -83,8 +83,8 @@ Example
 ```js
 const CryptoDriver = require('crypto-driver');
 
-const key = 'd6F3Efeqd6F3Efeqd6F3Efeqd6F3Efeq';
-const crypto = new CryptoDriver(key);
+const password = 'this is secret';
+const crypto = new CryptoDriver(password);
 ```
 
 ### `CryptoDriver#encrypt(data)`
