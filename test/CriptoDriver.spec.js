@@ -48,12 +48,13 @@ const THROWS = {
 
 // ━━ CONSTANTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * Add description.
+ * The `createInstance` function creates an instance of the `CryptoDriver`
+ * class that will be tested.
  *
  * @private
  * @function createInstance
- * @param {string} key  - Add description.
- * @returns {CryptoDriver} Add description.
+ * @param {string} password  - The password used for encryption and decryption.
+ * @returns {CryptoDriver} An instance of the `CryptoDriver` class.
  * @example createInstance(d6F3Efeqd6F3Efeqd6F3Efeqd6F3Efeq);
  *
  */
