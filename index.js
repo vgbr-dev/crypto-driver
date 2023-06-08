@@ -1,9 +1,9 @@
 /**
- * @author Victor Giovanni Beltrán Rodríguez
- * @file Manages main entry point.
+ * @file Main module for the project.
+ * @description This module exports the main functionality of the project.
  */
 
-// ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
  * The CryptoDriver class contain methods to encrypt and decrypt data.
  *
