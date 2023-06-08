@@ -58,7 +58,7 @@ const THROWS = {
  * @example createInstance(d6F3Efeqd6F3Efeqd6F3Efeqd6F3Efeq);
  *
  */
-const createInstance = key => new CryptoDriver(key);
+const createInstance = password => new CryptoDriver(password);
 
 // ━━ TEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 describe('CryptoDriver', () => {
